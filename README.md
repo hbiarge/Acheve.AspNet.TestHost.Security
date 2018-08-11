@@ -15,7 +15,8 @@ the claims for authenticated calls to the WebApi.
 
 In the TestServer startup class you shoud incude the authentication service and add the .Net Core new AUthentication middleware:
 
-     public class TestStartup
+```c#
+    public class TestStartup
     {
         public void ConfigureServices(IServiceCollection services)
         {
@@ -37,10 +38,12 @@ In the TestServer startup class you shoud incude the authentication service and 
             app.UseMvcWithDefaultRoute();
         }
     }
+```
 
 And in your tests you can use an HttpClient with default credentials or build 
 the request with the server RequestBuilder and with the specified claims:
 
+```c#
     public class VauesWithDefaultUserTests : IDisposable
     {
         private readonly TestServer _server;
@@ -93,9 +96,11 @@ the request with the server RequestBuilder and with the specified claims:
             _userHttpCient.Dispose();
         }
     }
+``
 
 Both methods (`WithDefaultIdentity` and `WithIdentity`) accept as the only parameter an IEnumerabe&lt;Claim&gt; that should include the desired user claims in the request.
 
+```c#
     public static class Identities
     {
         public static readonly IEnumerable<Claim> User = new[]
@@ -106,5 +111,6 @@ Both methods (`WithDefaultIdentity` and `WithIdentity`) accept as the only param
 
         public static readonly IEnumerable<Claim> Empty = new Claim[0];
     }
+```
 
 You can find a complete example in the [samples](https://github.com/hbiarge/Acheve.AspNetCore.TestHost.Security/tree/master/Acheve.AspNet.TestHost.Security/samples) directory.
